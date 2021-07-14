@@ -5,19 +5,18 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>2.5.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.hines</groupId>
-    <artifactId>espn_player_scraper</artifactId>
+    <groupId>dev.tk2575</groupId>
+    <artifactId>fantasy-baseball-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>playerscraper</name>
+    <name>fantasy-baseball-app</name>
     <description>Utility app for interacting with ESPN fantasy API to fetch player data</description>
 
     <properties>
-        <java.version>11</java.version>
-        <spring-swagger.version>2.9.2</spring-swagger.version>
-        <lombok.version>1.18.14</lombok.version>
+        <java.version>16</java.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <dependencies>
@@ -30,18 +29,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- START: Swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${spring-swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${spring-swagger.version}</version>
-        </dependency>
-        <!-- END: Swagger -->
         <!-- START: Lombok -->
         <dependency>
             <artifactId>lombok</artifactId>
@@ -50,12 +37,6 @@
             <scope>provided</scope>
         </dependency>
         <!-- END: Lombok -->
-
-        <dependency>
-            <groupId>com.sendgrid</groupId>
-            <artifactId>sendgrid-java</artifactId>
-            <version>4.7.2</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
