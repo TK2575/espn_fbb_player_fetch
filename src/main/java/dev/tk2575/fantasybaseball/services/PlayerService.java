@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -55,17 +53,17 @@ public class PlayerService extends ESPNService {
 				teamResponse.getBody().forEach(teamToFetch -> {
 					Team team = getTeam(leagueYear, entity, teamToFetch);
 					TeamRoster teamRoster = TeamRoster.builder().name(teamToFetch.getLocation() + " " + teamToFetch.getNickname()).build();
-					Set<String> rosterNames = new HashSet<>();
+					List<Player> players = new ArrayList<>();
 
 					if (team != null && team.getRoster() != null && !isEmpty(team.getRoster().getEntries())) {
 						team.getRoster().getEntries().forEach(entry -> {
 							if (entry.getPlayerPoolEntry() != null) {
-								rosterNames.add(entry.getPlayerPoolEntry().getPlayer().getFullName());
+								players.add(entry.getPlayerPoolEntry().getPlayer());
 							}
 						});
 					}
 
-					teamRoster.setRoster(rosterNames);
+					teamRoster.setPlayers(players);
 					teams.add(teamRoster);
 				});
 			}
