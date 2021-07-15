@@ -12,4 +12,12 @@ import java.util.List;
 public class TeamRoster {
 	String name;
 	List<Player> players;
+
+	public long getPoints() {
+		long points = 0;
+		for (Player player : players) {
+			points = points + player.getPoints();
+		}
+		return points;
+	}
 }

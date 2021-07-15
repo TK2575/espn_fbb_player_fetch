@@ -2,7 +2,7 @@ package dev.tk2575.fantasybaseball.fangraphs;
 
 import java.math.BigDecimal;
 
-interface FanGraphsPlayer {
+public interface FanGraphsPlayer {
 
 	String getTeam();
 
@@ -13,4 +13,6 @@ interface FanGraphsPlayer {
 	long getGames();
 
 	BigDecimal getWar();
+
+	long getPoints();
 }

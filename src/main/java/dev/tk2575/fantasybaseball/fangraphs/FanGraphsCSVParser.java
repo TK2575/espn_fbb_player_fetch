@@ -6,13 +6,15 @@ import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static java.lang.Long.parseLong;
 
 @Log4j2
-class CSVParser {
+public class FanGraphsCSVParser {
 
 	private static final String DIRECTORY = "fangraphs/projections";
 
@@ -22,7 +24,7 @@ class CSVParser {
 	private final List<CSVFile> batterProjectionFiles = new ArrayList<>();
 	private final List<CSVFile> pitcherProjectionFiles = new ArrayList<>();
 
-	CSVParser() {
+	public FanGraphsCSVParser() {
 		for (CSVFile file : Utils.readCSVFilesInDirectory(DIRECTORY)) {
 			String fileName = file.getName().toLowerCase();
 			if (fileName.contains("batter")) {
@@ -34,15 +36,23 @@ class CSVParser {
 		}
 	}
 
-	List<FanGraphsBatter> getBatterProjections() {
-		List<FanGraphsBatter> results = new ArrayList<>();
+	public Map<String, FanGraphsPlayer> getAllProjections() {
+		Map<String, FanGraphsPlayer> results = new HashMap<>();
+		getBatterProjections().forEach(results::put);
+		getPitcherProjections().forEach((k,v) -> results.put(k+"-1", v));
+		return results;
+	}
+
+	public Map<String, FanGraphsBatter> getBatterProjections() {
+		Map<String, FanGraphsBatter> results = new HashMap<>();
 		for (CSVFile file : batterProjectionFiles) {
 			if (file.getHeader().equals(BATTER_HEADERS)) {
 				int line = 1;
 				for (String[] row : file.getRowsOfDelimitedValues()) {
 					line++;
 					try {
-						results.add(batterParser.apply(row));
+						FanGraphsBatter batter = batterParser.apply(row);
+						results.put(batter.getName(), batter);
 					}
 					catch (Exception e) {
 						log.error(String.format("Encountered parse error on line %s in file %s. Skipping row", line, file.getName()));
@@ -57,15 +67,16 @@ class CSVParser {
 		return results;
 	}
 
-	List<FanGraphsPitcher> getPitcherProjections() {
-		List<FanGraphsPitcher> results = new ArrayList<>();
+	Map<String, FanGraphsPitcher> getPitcherProjections() {
+		Map<String, FanGraphsPitcher> results = new HashMap<>();
 		for (CSVFile file : pitcherProjectionFiles) {
 			if (file.getHeader().equals(PITCHER_HEADERS)) {
 				int line = 1;
 				for (String[] row : file.getRowsOfDelimitedValues()) {
 					line++;
 					try {
-						results.add(pitcherParser.apply(row));
+						FanGraphsPitcher pitcher = pitcherParser.apply(row);
+						results.put(pitcher.getName(), pitcher);
 					}
 					catch (Exception e) {
 						log.error(String.format("Encountered parse error on line %s in file %s. Skipping row", line, file.getName()));
@@ -136,7 +147,7 @@ class CSVParser {
 			/*@formatter:on*/
 
 	public static void main(String[] args) {
-		CSVParser parser = new CSVParser();
+		FanGraphsCSVParser parser = new FanGraphsCSVParser();
 		System.out.println(parser.getBatterProjections());
 		System.exit(0);
 	}

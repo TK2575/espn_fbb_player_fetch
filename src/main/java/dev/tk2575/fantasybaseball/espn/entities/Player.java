@@ -2,6 +2,8 @@ package dev.tk2575.fantasybaseball.espn.entities;
 
 import lombok.*;
 
+import java.util.Optional;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,4 +26,6 @@ public class Player {
 	String opsVsLefties;
 	String opsVsRighties;
 	PlayerAthlete opposingPitcher;
+
+	long points;
 }

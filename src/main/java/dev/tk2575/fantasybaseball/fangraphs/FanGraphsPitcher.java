@@ -3,6 +3,7 @@ package dev.tk2575.fantasybaseball.fangraphs;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(toBuilder = true)
@@ -32,4 +33,13 @@ public class FanGraphsPitcher implements FanGraphsPlayer {
 	private final BigDecimal strikeoutsPerNine;
 	private final BigDecimal walksPerNine;
 	private final BigDecimal fieldingIndependentPitching;
+
+	@Override
+	public long getPoints() {
+		/*@formatter:off*/
+		return (inningsPitched.setScale(0, RoundingMode.FLOOR).longValue())
+				+ (7 * wins) + (-5 * losses) + (5 * saves) + strikeOuts
+				+ (-2 * earnedRuns) + (-1 * hits) + (-1 * walks);
+		/*@formatter:on*/
+	}
 }
