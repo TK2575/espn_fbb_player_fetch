@@ -1,8 +1,8 @@
 package dev.tk2575.fantasybaseball;
 
-import dev.tk2575.fantasybaseball.entities.Message;
-import dev.tk2575.fantasybaseball.entities.Player;
-import dev.tk2575.fantasybaseball.entities.Topics;
+import dev.tk2575.fantasybaseball.espn.entities.Message;
+import dev.tk2575.fantasybaseball.espn.entities.Player;
+import dev.tk2575.fantasybaseball.espn.entities.Topics;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
